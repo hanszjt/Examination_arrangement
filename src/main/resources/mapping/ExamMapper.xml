@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.mapper.ExamMapper">
+    <resultMap id="ExamList" type="com.mx.bean.Exam">
+        <result column="id" property="id"/>
+        <result column="classroom" property="classroom"/>
+        <result column="invigilator" property="invigilator"/>
+        <result column="examsubject" property="examsubject"/>
+        <result column="examtime" property="examtime"/>
+        <result column="examclass" property="examclass"/>
+    </resultMap>
+    <insert id="addExam" parameterType="com.mx.bean.Exam">
+        INSERT INTO exam_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="classroom != null">
+                classroom,
+            </if>
+            <if test="invigilator != null">
+                invigilator,
+            </if>
+            <if test="examsubject != null">
+                examsubject,
+            </if>
+            <if test="examtime != null">
+                examtime,
+            </if>
+            <if test="examclass != null">
+                examclass,
+            </if>
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            <if test="classroom != null">
+                #{classroom},
+            </if>
+            <if test="invigilator != null">
+                #{invigilator},
+            </if>
+            <if test="examsubject != null">
+                #{examsubject},
+            </if>
+            <if test="examtime != null">
+                #{examtime},
+            </if>
+            <if test="examclass != null">
+                #{examclass},
+            </if>
+        </trim>
+    </insert>
+
+    <!--<delete id="deleteClassUsedate">
+        DELETE FROM class_usedate_info WHERE id = #{id}
+    </delete>
+
+    <update id="updateClassUsedate" parameterType="com.mx.bean.ClassUsedate">
+        UPDATE class_usedate_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="usedate != null">
+                usedate,
+            </if>
+            <if test="usetime != null">
+                usetime,
+            </if>
+            <if test="class_id != null">
+                class_id,
+            </if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findAllClassUsedate" resultMap="ClassUsedateList">
+        SELECT * FROM class_usedate_info
+    </select>
+
+    <select id="querryClassUsedateById" resultType="com.mx.bean.ClassUsedate">
+        SELECT * FROM class_usedate_info WHERE id = #{id}
+    </select>
+
+    <select id="selectClassUsedateByName" resultMap="ClassUsedateList" >
+        SELECT * FROM class_usedate_info WHERE usedate= #{time}
+    </select>
+
+    <delete id="deleteClassUsedateByIds" >
+        DELETE FROM class_usedate_info WHERE id IN
+        <foreach collection="list" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+-->
+
+</mapper>

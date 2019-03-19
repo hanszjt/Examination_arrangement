@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.mapper.TeacherMapper">
+    <resultMap id="teacherList" type="com.mx.bean.Teacher">
+        <result column="tid" property="tid"/>
+        <result column="tname" property="tname"/>
+        <result column="tcollege" property="tcollege"/>
+        <result column="ttel" property="ttel"/>
+    </resultMap>
+    <insert id="addTeacher" parameterType="com.mx.bean.Teacher">
+      INSERT INTO teacher_info
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+          <if test="tid != null">
+              tid,
+          </if>
+          <if test="tname != null">
+              tname,
+          </if>
+          <if test="tcollege != null">
+              tcollege,
+          </if>
+          <if test="ttel != null">
+              ttel,
+          </if>
+      </trim>
+      <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+          <if test="tid != null">
+              #{tid},
+          </if>
+          <if test="tname != null">
+              #{tname},
+          </if>
+          <if test="tcollege != null">
+              #{tcollege},
+          </if>
+          <if test="ttel != null">
+              #{ttel},
+          </if>
+      </trim>
+    </insert>
+
+    <delete id="deleteTeacher">
+        DELETE FROM teacher_info WHERE tid = #{tid}
+    </delete>
+
+    <update id="updateTeacher" parameterType="com.mx.bean.Teacher">
+        UPDATE teacher_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="tid != null">
+               tid = #{tid},
+            </if>
+            <if test="tname != null">
+                tname = #{tname},
+            </if>
+            <if test="tcollege != null">
+               tcollege = #{tcollege},
+            </if>
+            <if test="ttel != null">
+                ttel = #{ttel},
+            </if>
+        </trim>
+        WHERE tid = #{tid}
+    </update>
+
+    <select id="findAllTeacher" resultMap="teacherList">
+        SELECT * FROM teacher_info
+    </select>
+
+    <select id="querryTeacherById" resultType="com.mx.bean.Teacher">
+        SELECT * FROM teacher_info WHERE id = #{id}
+    </select>
+
+    <select id="selectTeacherByName" resultMap="teacherList" >
+        SELECT * FROM teacher_info WHERE tname LIKE "%"#{tname}"%"
+    </select>
+
+    <delete id="deleteTeacherByIds" >
+        DELETE FROM teacher_info WHERE tid IN 
+        <foreach collection="list" item="tids" open="(" separator="," close=")">
+            #{tids}
+        </foreach>
+    </delete>
+
+
+</mapper>

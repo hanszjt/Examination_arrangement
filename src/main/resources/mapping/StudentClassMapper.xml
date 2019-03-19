@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.mapper.StudentClassMapper">
+    <resultMap id="StudentClassList" type="com.mx.bean.StudentClass">
+        <result column="id" property="id"/>
+        <result column="classname" property="classname"/>
+    </resultMap>
+    <insert id="addStudentClass" parameterType="com.mx.bean.StudentClass">
+        INSERT INTO studentclass_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="classname != null">
+                classname,
+            </if>
+            <if test="studentnum != null">
+                studentnum,
+            </if>
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            <if test="classname != null">
+                #{classname},
+            </if>
+            <if test="studentnum != null">
+                #{studentnum},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteStudentClass">
+        DELETE FROM studentclass_info WHERE id = #{id}
+    </delete>
+
+    <update id="updateStudentClass" parameterType="com.mx.bean.StudentClass">
+        UPDATE studentclass_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="classname != null">
+                classname,
+            </if>
+            <if test="studentnum != null">
+                studentnum,
+            </if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findAllStudentClass" resultMap="StudentClassList">
+        SELECT * FROM studentclass_info
+    </select>
+
+    <select id="querryStudentClassById" resultType="com.mx.bean.StudentClass">
+        SELECT * FROM studentclass_info WHERE id = #{id}
+    </select>
+
+    <select id="selectStudentClassByName" resultMap="StudentClassList" >
+        SELECT * FROM studentclass_info WHERE classname LIKE "%"#{classname}"%"
+    </select>
+
+    <delete id="deleteStudentClassByIds" >
+        DELETE FROM studentclass_info WHERE id IN
+        <foreach collection="list" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+
+</mapper>

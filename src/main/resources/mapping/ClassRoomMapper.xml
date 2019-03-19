@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.mapper.ClassRoomMapper">
+    <resultMap id="ClassRoomList" type="com.mx.bean.ClassRoom">
+        <result column="id" property="id"/>
+        <result column="teacherbuilding" property="teacherbuilding"/>
+        <result column="classroomnum" property="classroomnum"/>
+        <result column="classroomcount" property="classroomcount"/>
+    </resultMap>
+    <insert id="addClassRoom" parameterType="com.mx.bean.ClassRoom">
+        INSERT INTO classroom_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teachbuilding != null">
+                teachbuilding,
+            </if>
+            <if test="classroomnum != null">
+                classroomnum,
+            </if>
+            <if test="classroomcount != null">
+                classroomcount,
+            </if>
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            <if test="teachbuilding != null">
+                #{teachbuilding},
+            </if>
+            <if test="classroomnum != null">
+                #{classroomnum},
+            </if>
+            <if test="classroomcount != null">
+                #{classroomcount},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteClassRoom">
+        DELETE FROM classroom_info WHERE id = #{id}
+    </delete>
+
+    <update id="updateClassRoom" parameterType="com.mx.bean.ClassRoom">
+        UPDATE classroom_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="teachbuilding != null">
+                teachbuilding,
+            </if>
+            <if test="classroomnum != null">
+                classroomnum,
+            </if>
+            <if test="classroomcount != null">
+                classroomcount,
+            </if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findAllClassRoom" resultMap="ClassRoomList">
+        SELECT * FROM classroom_info
+    </select>
+
+    <select id="querryClassRoomById" resultType="com.mx.bean.ClassRoom">
+        SELECT * FROM classroom_info WHERE id = #{id}
+    </select>
+
+    <select id="selectClassRoomByName" resultMap="ClassRoomList" >
+        SELECT * FROM classroom_info WHERE teachbuilding= "%"#{classname}"%"
+    </select>
+
+    <select id="selectClassRoomDistIds" resultMap="ClassRoomList" >
+        SELECT * FROM classroom_info WHERE classroom_info.id NOT IN
+        <foreach collection="list" item="ids" open="(" separator="," close=")">
+            ${ids}
+        </foreach>
+    </select>
+
+    <delete id="deleteClassRoomByIds" >
+        DELETE FROM classroom_info WHERE id IN
+        <foreach collection="list" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+
+</mapper>

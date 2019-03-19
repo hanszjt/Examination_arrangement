@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>内蒙古工业大学排考系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+      <link rel="stylesheet" href="./lib/layui/formSelects-v4.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
+    <script type="text/javascript" src="/lib/layui/formSelects-v4.js" charset="utf-8"></script>
+      <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body>
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so">
+          <input class="layui-input" placeholder="选择可以排考日期" name="start" id="start">
+          <input class="layui-input" placeholder="选择最晚排考日期" name="end" id="end">
+          <div class="layui-input-inline">
+            <select name="classId"  lay-verify="" xm-select="select" xm-select-show-count="1" xm-select-search>
+              <option value="">选择班级</option>
+              <option th:each="list:${studentclass}" th:text="${list.classname}" th:value="${list.id}"></option>
+            </select>
+          </div>
+          <div class="layui-input-inline">
+            <select name="subjectId" lay-search lay-verify="">
+              <option value="">选择排考科目</option>
+              <option th:each="examsubject:${examsubject}" th:text="${examsubject.subjectname}" th:value="${examsubject.id}">支付宝</option>
+            </select>
+          </div>
+          <button class="layui-btn"  lay-submit="" lay-filter="search">进行排考</button>
+        </form>
+      </div>
+
+    </div>
+    <script>
+
+      var formSelects = layui.formSelects;
+      formSelects.render('select');
+
+      layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#end' //指定元素
+
+        });
+      });
+
+      layui.use(['form','layer'], function(){
+        $ = layui.jquery;
+        var form = layui.form
+        form.on('submit(search)', function(data){
+          $.ajax({
+            type:"post",
+            async:true,
+            url:"/arrangementExam",
+            data:data.field,
+            dateType:"json",
+            success:function () {
+              layer.alert("增加成功", {icon: 6},function () {
+                //刷新界面
+                window.parent.location.reload();
+                // 获得frame索引
+                var index = parent.layer.getFrameIndex(window.name);
+                //关闭当前frame
+                parent.layer.close(index);
+              });
+            },
+            error:layer.alert("系统忙，请稍后重试")
+          });
+        })
+        return false;
+      });
+
+
+
+    </script>
+
+  </body>
+
+</html>

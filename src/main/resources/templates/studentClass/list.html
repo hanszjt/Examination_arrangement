@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>内蒙古工业大学排考系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body class="layui-anim layui-anim-up">
+    <div class="x-nav">
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" th:action="@{/studentClass/search}" method="post">
+          <input type="text" name="tname"  placeholder="请输入搜索班级名称" autocomplete="off" class="layui-input">
+          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+        </form>
+      </div>
+      <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn" onclick="x_admin_show('添加班级','/studentClass',600,400)"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px" >共有数据:  [[${studentClassCount}]]  条</span>
+      </xblock>
+      <table class="layui-table">
+        <thead>
+          <tr>
+            <th>
+              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+            </th>
+            <th>班级编号</th>
+            <th>班级名称</th>
+            <th>班级人数</th>
+            <th>操作</th></tr>
+        </thead>
+        <tbody>
+          <tr th:each="studentClass:${pageInfo.list}">
+            <td>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" th:data-id="${studentClass.id}"><i class="layui-icon">&#xe605;</i></div>
+            </td>
+            <td th:text="${studentClass.id}"></td>
+            <td th:text="${studentClass.classname}"></td>
+            <td th:text="${studentClass.studentnum}"></td>
+            <td class="td-manage">
+              <a title="编辑"  th:onclick="x_admin_show('编辑',[[@{/studentClass/}+${studentClass.id}]],600,400)" href="javascript:;">
+                <i class="layui-icon">&#xe642;</i>
+              </a>
+              <a title="删除" th:onclick="member_del(this,[[${studentClass.id}]])" href="javascript:;">
+                <i class="layui-icon">&#xe640;</i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <div class="layui-card-body">
+            <div id="test-laypage-demo7">
+              <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-1">
+                <span class="layui-laypage-count">共 [[${pageInfo.size}]] 条</span>
+                <a th:href="'?pageNo='+${pageInfo.prePage}" class="layui-laypage-prev" data-page="0" th:if="${pageInfo.hasPreviousPage}">上一页</a>
+                <a class="layui-laypage-prev layui-disabled" data-page="0" th:unless="${pageInfo.hasPreviousPage}">上一页</a>
+                <div class="layui-box layui-laypage layui-laypage-default" th:each="nav:${pageInfo.navigatepageNums}">
+                  <a th:href="'?pageNo='+${nav}" th:text="${nav}" th:if="${nav!=pageInfo.pageNum}" ></a>
+                  <span class="layui-laypage-curr" th:if="${nav == pageInfo.pageNum}">
+                    <em class="layui-laypage-em"></em>
+                    <em>[[${nav}]]</em>
+                  </span>
+                </div>
+
+
+                <a th:href="'?pageNo='+${pageInfo.nextPage}" class="layui-laypage-next" th:if="${pageInfo.hasNextPage}">下一页</a>
+                <a  class="layui-laypage-next layui-disabled" th:unless="${pageInfo.hasNextPage}">下一页</a>
+
+                <span class="layui-laypage-skip">到第
+                  <input type="text" min="1" th:value="${pageInfo.pageNum}" id="pageJump" class="layui-input">页
+                  <button type="button" class="layui-laypage-btn" onclick="jump()">确定</button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <script>
+      /*用户-删除*/
+      function member_del(obj,id){
+          layer.confirm('确认要删除吗？',function(index){
+              //发异步删除数据
+              $.ajax({
+                  type:"DELETE",
+                  date:id.field,
+                  async:true,
+                  url:"/studentClass/"+id,
+                  dateType:"json",
+                  success:function () {
+                      layer.msg('已删除!',{icon:1,time:1000},function () {
+                          location.reload();
+                      });
+                  },
+                  error:function () {
+                      layer.msg('删除失败，请稍后重试!',{icon:1,time:1000});
+                  }
+
+              });
+
+          });
+      }
+
+
+
+      function delAll (argument) {
+
+        var data = tableCheck.getData();
+        if(data.length == 0){
+            layer.msg('请选择要删除的班级信息');
+        }else {
+            layer.confirm('确认要删除吗？', function (index) {
+                //捉到所有被选中的，发异步进行删除
+                $.ajax({
+                    type: "post",
+                    url: "/dstudentClasss",
+                    data: JSON.stringify(data),
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (result) {
+                        layer.msg('删除成功' + result.count + "条", {icon: 1}, function () {
+                            location.reload();
+                        });
+
+//                    $(".layui-form-checked").not('.header').parents('tr').remove();
+                    },
+                    error: function () {
+
+                    }
+                });
+
+            });
+        }
+      }
+
+      function jump() {
+        var page = document.getElementById("pageJump").value;
+        /*const http = new XMLHttpRequest();
+        http.open("GET","?pageNo="+page);
+        http.send();*/
+        location.replace("?pageNo="+page);
+      }
+
+
+    </script>
+
+  </body>
+
+</html>

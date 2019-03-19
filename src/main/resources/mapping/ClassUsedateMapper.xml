@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.mapper.ClassUsedateMapper">
+    <resultMap id="ClassUsedateList" type="com.mx.bean.ClassUsedate">
+        <result column="id" property="id"/>
+        <result column="usedate" property="usedate"/>
+        <result column="usetime" property="usetime"/>
+        <result column="class_id" property="class_id"/>
+    </resultMap>
+    <insert id="addClassUsedate" parameterType="com.mx.bean.ClassUsedate">
+        INSERT INTO class_usedate_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="usedate != null">
+                usedate,
+            </if>
+            <if test="usetime != null">
+                usetime,
+            </if>
+            <if test="class_id != null">
+                class_id,
+            </if>
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            <if test="usedate != null">
+                #{usedate},
+            </if>
+            <if test="usetime != null">
+                #{usetime},
+            </if>
+            <if test="class_id != null">
+                #{class_id},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteClassUsedate">
+        DELETE FROM class_usedate_info WHERE id = #{id}
+    </delete>
+
+    <update id="updateClassUsedate" parameterType="com.mx.bean.ClassUsedate">
+        UPDATE class_usedate_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="usedate != null">
+                usedate,
+            </if>
+            <if test="usetime != null">
+                usetime,
+            </if>
+            <if test="class_id != null">
+                class_id,
+            </if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findAllClassUsedate" resultMap="ClassUsedateList">
+        SELECT * FROM class_usedate_info
+    </select>
+
+    <select id="querryClassUsedateById" resultType="com.mx.bean.ClassUsedate">
+        SELECT * FROM class_usedate_info WHERE id = #{id}
+    </select>
+
+    <select id="selectClassUsedateByName" resultMap="ClassUsedateList" >
+        SELECT * FROM class_usedate_info WHERE usedate= #{time}
+    </select>
+
+    <delete id="deleteClassUsedateByIds" >
+        DELETE FROM class_usedate_info WHERE id IN
+        <foreach collection="list" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+
+</mapper>
