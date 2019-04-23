@@ -60,10 +60,10 @@ public interface ClassRoomMapper {
 
     /**
      * 根据姓名搜索教室
-     * @param classname
+     * @param classroomnum
      * @return
      */
-    List<ClassRoom> selectClassRoomByName(String classname);
+    List<ClassRoom> selectClassRoomByName(String classroomnum);
 
     List<ClassRoom> selectClassRoomDistIds(List<Integer> ids);
 }

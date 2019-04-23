@@ -13,7 +13,7 @@ public interface TeacherService {
 
     int addTeacher(Teacher teacher);
 
-    int removeTeacher(String tid);
+    int removeTeacher(int id);
 
     int updateTeacher(Teacher teacher);
 
@@ -21,7 +21,9 @@ public interface TeacherService {
 
     Teacher selectTeacherById(int id);
 
-    int deleteTeacherByIds(List<String> tids);
+    Teacher selectTeacherByTid(String tid);
+
+    int deleteTeacherByIds(List<Integer> ids);
 
     int selectTeacherCount();
 

@@ -22,10 +22,7 @@
 <body>
     <!-- 顶部开始 -->
     <div class="container">
-        <div class="logo"><a href="/main.html">内蒙古工业大学排考系统 v1.0</a></div>
-        <div class="left_open">
-            <i title="展开左侧栏" class="iconfont">&#xe699;</i>
-        </div>
+        <div class="logo"><a href="/indexone.html">内蒙古工业大学排考系统 v1.0</a></div>
         <ul class="layui-nav left fast-add" lay-filter="">
           <li class="layui-nav-item">
             <a href="javascript:;">友情链接</a>
@@ -52,73 +49,15 @@
     <div class="left-nav">
       <div id="side-nav">
         <ul id="nav">
+
             <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe726;</i>
-                    <cite>管理员管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a th:_href="@{/userlist}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>管理员列表</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a th:_href="@{/userrole}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>角色管理</cite>
-                        </a>
-                    </li >
-                </ul>
-            </li>
-            <li>
-                <a th:_href="@{/teachers}">
+                <a th:_href="@{/teachersearch?tname=}+${session.loginUser}">
                     <i class="iconfont">&#xe6b8;</i>
-                    <cite>教师管理</cite>
+                    <cite>监考信息</cite>
                 </a>
             </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
-                    <cite>校园信息管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a th:_href="@{/examsubjects}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>考试科目</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a th:_href="@{/studentClasss}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>班级信息</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a th:_href="@{/classRoom}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>教室信息</cite>
-                        </a>
-                    </li >
-                </ul>
-            </li>
-            <li>
-                <a th:_href="@{/arrangementExam}">
-                    <i class="iconfont">&#xe6a2;</i>
-                    <cite>自动排考</cite>
-                </a>
-            </li>
-            <li>
-                <a th:_href="@{/examInfo}">
-                    <i class="iconfont">&#xe6a2;</i>
-                    <cite>考场信息管理</cite>
-                </a>
-            </li>
-            
+
+
 
         </ul>
       </div>

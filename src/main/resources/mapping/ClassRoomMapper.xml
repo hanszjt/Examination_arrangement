@@ -41,13 +41,13 @@
         UPDATE classroom_info
         <trim prefix="set" suffixOverrides=",">
             <if test="teachbuilding != null">
-                teachbuilding,
+                teachbuilding=#{teachbuilding},
             </if>
             <if test="classroomnum != null">
-                classroomnum,
+                classroomnum=#{classroomnum},
             </if>
             <if test="classroomcount != null">
-                classroomcount,
+                classroomcount=#{classroomcount},
             </if>
         </trim>
         WHERE id = #{id}
@@ -62,7 +62,7 @@
     </select>
 
     <select id="selectClassRoomByName" resultMap="ClassRoomList" >
-        SELECT * FROM classroom_info WHERE teachbuilding= "%"#{classname}"%"
+        SELECT * FROM classroom_info WHERE classroomnum LIKE "%"#{classroomnum}"%"
     </select>
 
     <select id="selectClassRoomDistIds" resultMap="ClassRoomList" >

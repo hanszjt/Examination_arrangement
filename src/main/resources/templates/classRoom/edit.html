@@ -23,42 +23,50 @@
   <body>
     <div class="x-body layui-anim layui-anim-up">
         <form class="layui-form">
-          <div class="layui-form-item">
-              <label for="L_tid" class="layui-form-label">
-                  <span class="x-red">*</span>班级编号
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="L_tid" name="id" required="" lay-verify="id" onclick="inputdianji()"
-                  autocomplete="off" class="layui-input" th:value="${studentClass.id}" readonly="readonly" unselectable="on">
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="L_tname" class="layui-form-label">
-                  <span class="x-red">*</span>班级名称
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="L_tname" name="classname" required="" lay-verify="tname"
-                  autocomplete="off" class="layui-input" th:value="${studentClass.classname}">
-              </div>
-          </div>
-
             <div class="layui-form-item">
-                <label for="L_tname" class="layui-form-label">
-                    <span class="x-red">*</span>班级人数
+                <label for="L_tid" class="layui-form-label">
+                    <span class="x-red">*</span>教室编号
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="L_tname" name="studentnum" required="" lay-verify="tname"
-                           autocomplete="off" class="layui-input" th:value="${studentClass.studentnum}">
+                    <input type="text" id="L_tid" name="id" required="" lay-verify="id" onclick="inputdianji()"
+                           autocomplete="off" class="layui-input" th:value="${classRoom.id}" readonly="readonly" unselectable="on">
                 </div>
             </div>
-          <div class="layui-form-item">
-              <label for="L_tid" class="layui-form-label">
-              </label>
-              <button  class="layui-btn" lay-filter="add" lay-submit="">
-                  修改
-              </button>
-          </div>
-      </form>
+            <div class="layui-form-item">
+                <label for="L_tname" class="layui-form-label">
+                    <span class="x-red">*</span>教学楼编号
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="L_tname" name="teachbuilding" required="" lay-verify="tname"
+                           autocomplete="off" class="layui-input" th:value="${classRoom.teachbuilding}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_tname" class="layui-form-label">
+                    <span class="x-red">*</span>教室编号
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="L_tname" name="classroomnum" required="" lay-verify="tname"
+                           autocomplete="off" class="layui-input" th:value="${classRoom.classroomnum}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_tname" class="layui-form-label">
+                    <span class="x-red">*</span>教室可以考试人数
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="L_tname" name="classroomcount" required="" lay-verify="tname"
+                           autocomplete="off" class="layui-input" th:value="${classRoom.classroomcount}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_tid" class="layui-form-label">
+                </label>
+                <button  class="layui-btn" lay-filter="add" lay-submit="">
+                    修改
+                </button>
+            </div>
+        </form>
     </div>
     <script>
         function inputdianji(){
@@ -69,11 +77,7 @@
           var form = layui.form
           ,layer = layui.layer;
 
-            //自定义验证规则
-          /*form.verify({
-            id: [/^\d{5,10}/, '工号为5-10位数字']
 
-          });*/
 
 
           //监听提交
@@ -81,7 +85,7 @@
               $.ajax({
                   type:"put",
                   async:true,
-                  url:"/studentClass",
+                  url:"/classRoom",
                   data:data.field,
                   dateType:"json",
                   success:function () {

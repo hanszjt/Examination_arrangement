@@ -34,8 +34,17 @@ public class LoginController {
                         Map<String,Object> map , HttpSession httpSession){
         User user = userService.checkUser(username, password);
         if(user != null){
-            httpSession.setAttribute("loginUser",username);
-            return "redirect:/main.html";
+            if (user.getRole().equals("1")){
+                httpSession.setAttribute("loginUser", username);
+                return "redirect:/home.html";
+            }
+            if (user.getStatus().equals("0")) {
+                httpSession.setAttribute("loginUser", username);
+                return "redirect:/main.html";
+            }else {
+                map.put("msg","用户被停用，请联系管理员");
+                return "login";
+            }
         }else{
             map.put("msg","用户名或密码错误");
             return "login";
@@ -44,7 +53,7 @@ public class LoginController {
     }
 
 
-    @GetMapping("exitUser")
+    @GetMapping("/exitUser")
     public String exitUser(HttpSession httpSession){
         httpSession.setAttribute("loginUser",null);
         return "login";

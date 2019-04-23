@@ -27,7 +27,7 @@
         UPDATE exam_subject
         <trim prefix="set" suffixOverrides=",">
             <if test="subjectname != null">
-                subjectname,
+                subjectname=#{subjectname},
             </if>
         </trim>
         WHERE id = #{id}

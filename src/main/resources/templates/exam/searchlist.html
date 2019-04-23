@@ -27,15 +27,14 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so" th:action="@{/studentClass/search}" method="post">
-          <input type="text" name="classname"  placeholder="请输入搜索班级名称" autocomplete="off" class="layui-input">
+        <form class="layui-form layui-col-md12 x-so" th:action="@{/exam/search}" method="post">
+          <input type="text" name="tname"  placeholder="搜索监考教师姓名" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加班级','/studentClass',600,400)"><i class="layui-icon"></i>添加</button>
-        <span class="x-right" style="line-height:40px" >共有数据:  [[${studentClassCount}]]  条</span>
+        <span class="x-right" style="line-height:40px" >共有数据:  [[${examCount}]]  条</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -43,24 +42,30 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>班级编号</th>
-            <th>班级名称</th>
-            <th>班级人数</th>
+            <th>ID</th>
+            <th>考试教室</th>
+            <th>监考教师</th>
+            <th>考试科目</th>
+            <th>考试时间</th>
+            <th>考试班级</th>
             <th>操作</th></tr>
         </thead>
         <tbody>
-          <tr th:each="studentClass:${pageInfo.list}">
+          <tr th:each="exam:${pageInfo.list}">
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" th:data-id="${studentClass.id}"><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" th:data-id="${exam.id}"><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td th:text="${studentClass.id}"></td>
-            <td th:text="${studentClass.classname}"></td>
-            <td th:text="${studentClass.studentnum}"></td>
+            <td th:text="${exam.id}"></td>
+            <td th:text="${exam.classroom}"></td>
+            <td th:text="${exam.invigilator}"></td>
+            <td th:text="${exam.examsubject}"></td>
+            <td th:text="${exam.examtime}"></td>
+            <td th:text="${exam.examclass}"></td>
             <td class="td-manage">
-              <a title="编辑"  th:onclick="x_admin_show('编辑',[[@{/studentClass/}+${studentClass.id}]],600,400)" href="javascript:;">
+              <a title="编辑"  th:onclick="x_admin_show('编辑',[[@{/exam/}+${exam.id}]],600,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" th:onclick="member_del(this,[[${studentClass.id}]])" href="javascript:;">
+              <a title="删除" th:onclick="member_del(this,[[${exam.id}]])" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
@@ -74,10 +79,10 @@
             <div id="test-laypage-demo7">
               <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-1">
                 <span class="layui-laypage-count">共 [[${pageInfo.size}]] 条</span>
-                <a th:href="'?pageNo='+${pageInfo.prePage}" class="layui-laypage-prev" data-page="0" th:if="${pageInfo.hasPreviousPage}">上一页</a>
+                <a th:href="'?tname='+${serachname}+'&pageNo='+${pageInfo.prePage}" class="layui-laypage-prev" data-page="0" th:if="${pageInfo.hasPreviousPage}">上一页</a>
                 <a class="layui-laypage-prev layui-disabled" data-page="0" th:unless="${pageInfo.hasPreviousPage}">上一页</a>
                 <div class="layui-box layui-laypage layui-laypage-default" th:each="nav:${pageInfo.navigatepageNums}">
-                  <a th:href="'?pageNo='+${nav}" th:text="${nav}" th:if="${nav!=pageInfo.pageNum}" ></a>
+                  <a th:href="'?tname='+${serachname}+'&pageNo='+${nav}" th:text="${nav}" th:if="${nav!=pageInfo.pageNum}" ></a>
                   <span class="layui-laypage-curr" th:if="${nav == pageInfo.pageNum}">
                     <em class="layui-laypage-em"></em>
                     <em>[[${nav}]]</em>
@@ -85,7 +90,7 @@
                 </div>
 
 
-                <a th:href="'?pageNo='+${pageInfo.nextPage}" class="layui-laypage-next" th:if="${pageInfo.hasNextPage}">下一页</a>
+                <a th:href="'?tname='+${serachname}+'&pageNo='+${pageInfo.nextPage}" class="layui-laypage-next" th:if="${pageInfo.hasNextPage}">下一页</a>
                 <a  class="layui-laypage-next layui-disabled" th:unless="${pageInfo.hasNextPage}">下一页</a>
 
                 <span class="layui-laypage-skip">到第
@@ -109,7 +114,7 @@
                   type:"DELETE",
                   date:id.field,
                   async:true,
-                  url:"/studentClass/"+id,
+                  url:"/exam/"+id,
                   dateType:"json",
                   success:function () {
                       layer.msg('已删除!',{icon:1,time:1000},function () {
@@ -131,13 +136,13 @@
 
         var data = tableCheck.getData();
         if(data.length == 0){
-            layer.msg('请选择要删除的班级信息');
+            layer.msg('请选择要删除的教师信息');
         }else {
             layer.confirm('确认要删除吗？', function (index) {
                 //捉到所有被选中的，发异步进行删除
                 $.ajax({
                     type: "post",
-                    url: "/dstudentClasss",
+                    url: "/dexams",
                     data: JSON.stringify(data),
                     contentType: 'application/json;charset=utf-8',
                     success: function (result) {
@@ -161,7 +166,7 @@
         /*const http = new XMLHttpRequest();
         http.open("GET","?pageNo="+page);
         http.send();*/
-        location.replace("?pageNo="+page);
+        location.replace("?tname="+${serachname}+"&pageNo="+page);
       }
 
 

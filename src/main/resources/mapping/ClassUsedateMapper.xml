@@ -19,6 +19,9 @@
             <if test="class_id != null">
                 class_id,
             </if>
+            <if test="studentclassId != null">
+                studentclassId,
+            </if>
         </trim>
         <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
             <if test="usedate != null">
@@ -29,6 +32,9 @@
             </if>
             <if test="class_id != null">
                 #{class_id},
+            </if>
+            <if test="studentclassId != null">
+                #{studentclassId},
             </if>
         </trim>
     </insert>
@@ -48,6 +54,9 @@
             </if>
             <if test="class_id != null">
                 class_id,
+            </if>
+            <if test="studentclassId != null">
+                studentclassId,
             </if>
         </trim>
         WHERE id = #{id}

@@ -24,18 +24,13 @@
   
   <body>
     <div class="x-nav">
-      <span class="layui-breadcrumb">
-        <a href="">首页</a>
-        <a href="">演示</a>
-        <a>
-          <cite>导航元素</cite></a>
-      </span>
+
       <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
+        <div class="layui-form layui-col-md12 x-so">
           <input class="layui-input" placeholder="选择可以排考日期" name="start" id="start">
           <input class="layui-input" placeholder="选择最晚排考日期" name="end" id="end">
           <div class="layui-input-inline">
@@ -51,10 +46,26 @@
             </select>
           </div>
           <button class="layui-btn"  lay-submit="" lay-filter="search">进行排考</button>
-        </form>
+        </div>
       </div>
 
     </div>
+    <table class="layui-table" id="arrangementTable" lay-filter="arrangementTable">
+      <thead>
+        <tr>
+          <th>考试教室</th>
+          <th>监考老师</th>
+          <th>考试科目</th>
+          <th>考试时间</th>
+          <th>考试班级</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+    <div id="msg"></div>
+
     <script>
 
       var formSelects = layui.formSelects;
@@ -75,27 +86,36 @@
         });
       });
 
-      layui.use(['form','layer'], function(){
+      layui.use(['form','layer','table'], function(){
         $ = layui.jquery;
-        var form = layui.form
+        var form = layui.form;
+        var table = layui.table;
         form.on('submit(search)', function(data){
+
+
+
+
           $.ajax({
             type:"post",
             async:true,
             url:"/arrangementExam",
             data:data.field,
             dateType:"json",
-            success:function () {
-              layer.alert("增加成功", {icon: 6},function () {
-                //刷新界面
-                window.parent.location.reload();
-                // 获得frame索引
-                var index = parent.layer.getFrameIndex(window.name);
-                //关闭当前frame
-                parent.layer.close(index);
-              });
+            success:function (result) {
+              if (result.code == 200) {
+                layer.msg("排考完成！！！");
+                for (i = 0; i < result.total; i++) {
+                  $("tbody").append(
+                          '<tr><td>'+ result.data[i].classroom +'</td> <td>'+ result.data[i].invigilator +'</td> <td>'+ result.data[i].examsubject +'</td> <td>'+ result.data[i].examtime +'</td> <td>'+ result.data[i].examclass +'</td></tr>'
+                  );
+                }
+              }else {
+                layer.msg("当前没有符合要求的时间或者教室进行考试安排，请重新选择");
+              }
             },
-            error:layer.alert("系统忙，请稍后重试")
+            error:function (result) {
+              layer.msg("当前没有符合要求的时间或者教室进行考试安排，请重新选择");
+            }
           });
         })
         return false;

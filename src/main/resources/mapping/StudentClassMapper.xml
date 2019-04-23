@@ -33,10 +33,10 @@
         UPDATE studentclass_info
         <trim prefix="set" suffixOverrides=",">
             <if test="classname != null">
-                classname,
+                classname=#{classname},
             </if>
             <if test="studentnum != null">
-                studentnum,
+                studentnum=#{studentnum},
             </if>
         </trim>
         WHERE id = #{id}

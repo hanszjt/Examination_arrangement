@@ -40,7 +40,7 @@
     </insert>
 
     <delete id="deleteTeacher">
-        DELETE FROM teacher_info WHERE tid = #{tid}
+        DELETE FROM teacher_info WHERE id = #{id}
     </delete>
 
     <update id="updateTeacher" parameterType="com.mx.bean.Teacher">
@@ -59,7 +59,7 @@
                 ttel = #{ttel},
             </if>
         </trim>
-        WHERE tid = #{tid}
+        WHERE id = #{id}
     </update>
 
     <select id="findAllTeacher" resultMap="teacherList">
@@ -70,14 +70,18 @@
         SELECT * FROM teacher_info WHERE id = #{id}
     </select>
 
+    <select id="querryTeacherByTid" resultType="com.mx.bean.Teacher">
+        SELECT * FROM teacher_info WHERE tid = #{tid}
+    </select>
+
     <select id="selectTeacherByName" resultMap="teacherList" >
         SELECT * FROM teacher_info WHERE tname LIKE "%"#{tname}"%"
     </select>
 
     <delete id="deleteTeacherByIds" >
-        DELETE FROM teacher_info WHERE tid IN 
-        <foreach collection="list" item="tids" open="(" separator="," close=")">
-            #{tids}
+        DELETE FROM teacher_info WHERE id IN
+        <foreach collection="list" item="ids" open="(" separator="," close=")">
+            #{ids}
         </foreach>
     </delete>
 

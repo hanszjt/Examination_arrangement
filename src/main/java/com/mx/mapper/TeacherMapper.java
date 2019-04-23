@@ -21,10 +21,10 @@ public interface TeacherMapper {
 
     /**
      * 删除教师
-     * @param tid
+     * @param id
      * @return
      */
-    int deleteTeacher(String tid);
+    int deleteTeacher(int id);
 
     /**
      * 修改教师
@@ -46,12 +46,16 @@ public interface TeacherMapper {
      */
     Teacher querryTeacherById(int id);
 
+
+
+    Teacher querryTeacherByTid(String tid);
+
     /**
      * 批量删除教师
-     * @param tids
+     * @param ids
      * @return
      */
-    int deleteTeacherByIds(List<String> tids);
+    int deleteTeacherByIds(List<Integer> ids);
 
     /**
      * 查询教师数量

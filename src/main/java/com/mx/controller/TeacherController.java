@@ -69,23 +69,23 @@ public class TeacherController {
 
     /**
      * 删除教师
-     * @param tid
+     * @param id
      * @return
      */
     @ResponseBody
-    @DeleteMapping("/teacher/{tid}")
-    public String deleteTeacher(@PathVariable("tid") String tid){
-        teacherService.removeTeacher(tid);
+    @DeleteMapping("/teacher/{id}")
+    public String deleteTeacher(@PathVariable("id") int id){
+        teacherService.removeTeacher(id);
         return "success";
     }
 
     /**
      * 通过id查询教师
-     * @param tid
+     * @param id
      * @param model
      * @return
      */
-    @GetMapping("/teacher/{tid}")
+    @GetMapping("/teacher/{id}")
     public String toUpdatePage(@PathVariable("id")int id,
                                 Model model){
         Teacher teacher = teacherService.selectTeacherById(id);
@@ -114,7 +114,7 @@ public class TeacherController {
      */
     @ResponseBody
     @PostMapping("/dteachers")
-    public Map<String , Object> deleteTeacherByIds(@RequestBody List<String> data){
+    public Map<String , Object> deleteTeacherByIds(@RequestBody List<Integer> data){
         Map<String,Object> map = new HashMap<>();
         int i = teacherService.deleteTeacherByIds(data);
         map.put("count",i);

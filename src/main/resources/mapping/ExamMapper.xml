@@ -47,44 +47,53 @@
         </trim>
     </insert>
 
-    <!--<delete id="deleteClassUsedate">
-        DELETE FROM class_usedate_info WHERE id = #{id}
+    <delete id="deleteExam">
+        DELETE FROM exam_info WHERE id = #{id}
     </delete>
 
-    <update id="updateClassUsedate" parameterType="com.mx.bean.ClassUsedate">
-        UPDATE class_usedate_info
+    <update id="updateExam" parameterType="com.mx.bean.Exam">
+        UPDATE exam_info
         <trim prefix="set" suffixOverrides=",">
-            <if test="usedate != null">
-                usedate,
+            <if test="classroom != null">
+                classroom,
             </if>
-            <if test="usetime != null">
-                usetime,
+            <if test="invigilator != null">
+                invigilator,
             </if>
-            <if test="class_id != null">
-                class_id,
+            <if test="examsubject != null">
+                examsubject,
+            </if>
+            <if test="examtime != null">
+                examtime,
+            </if>
+            <if test="examclass != null">
+                examclass,
             </if>
         </trim>
         WHERE id = #{id}
     </update>
 
-    <select id="findAllClassUsedate" resultMap="ClassUsedateList">
-        SELECT * FROM class_usedate_info
+    <select id="findAllExam" resultMap="ExamList">
+        SELECT * FROM exam_info
     </select>
 
-    <select id="querryClassUsedateById" resultType="com.mx.bean.ClassUsedate">
-        SELECT * FROM class_usedate_info WHERE id = #{id}
+    <select id="querryExamById" resultType="com.mx.bean.Exam">
+        SELECT * FROM exam_info WHERE id = #{id}
     </select>
 
-    <select id="selectClassUsedateByName" resultMap="ClassUsedateList" >
-        SELECT * FROM class_usedate_info WHERE usedate= #{time}
+    <!--<select id="querryExamByDate" resultType="java.lang.Integer">
+        SELECT count(*) FROM exam_info WHERE examtime = #{date}
+    </select>-->
+
+    <select id="selectExamByName" resultMap="ExamList" >
+        SELECT * FROM exam_info WHERE invigilator LIKE "%"#{invigilator}"%"
     </select>
 
-    <delete id="deleteClassUsedateByIds" >
-        DELETE FROM class_usedate_info WHERE id IN
+    <delete id="deleteExamByIds" >
+        DELETE FROM exam_info WHERE id IN
         <foreach collection="list" item="ids" open="(" separator="," close=")">
             #{ids}
         </foreach>
     </delete>
--->
 
 </mapper>

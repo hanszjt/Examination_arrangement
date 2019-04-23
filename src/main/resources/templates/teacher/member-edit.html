@@ -25,11 +25,20 @@
         <form class="layui-form">
           <div class="layui-form-item">
               <label for="L_tid" class="layui-form-label">
+                  <span class="x-red">*</span>教师ID
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_tid" name="id" required="" lay-verify="" onclick="inputdianji()"
+                  autocomplete="off" class="layui-input" th:value="${teacher.id}" readonly="readonly" unselectable="on">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_tid" class="layui-form-label">
                   <span class="x-red">*</span>教师编号
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_tid" name="tid" required="" lay-verify="tid" onclick="inputdianji()"
-                  autocomplete="off" class="layui-input" th:value="${teacher.tid}" readonly="readonly" unselectable="on">
+                  <input type="text" id="L_tid" name="tid" required="" lay-verify="tid"
+                  autocomplete="off" class="layui-input" th:value="${teacher.tid}" >
               </div>
           </div>
           <div class="layui-form-item">
@@ -79,7 +88,7 @@
 
             //自定义验证规则
           form.verify({
-            tid: [/^\d{5,10}/, '工号为5-10位数字']
+            tid: [/^\d{5,10}$/, '工号为5位以上数字']
             ,ttel: [/^1[345678]\d{9}$/, '电话格式错误']
           });
 

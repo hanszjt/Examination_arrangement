@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   
   <head>
@@ -25,32 +25,58 @@
         <form class="layui-form">
           <div class="layui-form-item">
               <label for="L_tid" class="layui-form-label">
-                  <span class="x-red">*</span>班级编号
+                  <span class="x-red">*</span>考场编号
               </label>
               <div class="layui-input-inline">
                   <input type="text" id="L_tid" name="id" required="" lay-verify="id" onclick="inputdianji()"
-                  autocomplete="off" class="layui-input" th:value="${studentClass.id}" readonly="readonly" unselectable="on">
+                  autocomplete="off" class="layui-input" th:value="${exam.id}" readonly="readonly" unselectable="on">
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_tname" class="layui-form-label">
-                  <span class="x-red">*</span>班级名称
+                  <span class="x-red">*</span>考试教室
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_tname" name="classname" required="" lay-verify="tname"
-                  autocomplete="off" class="layui-input" th:value="${studentClass.classname}">
+                  <input type="text" id="L_tname" name="subjectname" required="" lay-verify="tname"
+                  autocomplete="off" class="layui-input" th:value="${examsubject.subjectname}">
               </div>
           </div>
-
-            <div class="layui-form-item">
-                <label for="L_tname" class="layui-form-label">
-                    <span class="x-red">*</span>班级人数
-                </label>
-                <div class="layui-input-inline">
-                    <input type="text" id="L_tname" name="studentnum" required="" lay-verify="tname"
-                           autocomplete="off" class="layui-input" th:value="${studentClass.studentnum}">
-                </div>
-            </div>
+          <div class="layui-form-item">
+              <label for="L_tname" class="layui-form-label">
+                  <span class="x-red">*</span>监考教师
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_tname" name="subjectname" required="" lay-verify="tname"
+                  autocomplete="off" class="layui-input" th:value="${examsubject.subjectname}">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_tname" class="layui-form-label">
+                  <span class="x-red">*</span>考试科目
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_tname" name="subjectname" required="" lay-verify="tname"
+                  autocomplete="off" class="layui-input" th:value="${examsubject.subjectname}">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_tname" class="layui-form-label">
+                  <span class="x-red">*</span>考试时间
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_tname" name="subjectname" required="" lay-verify="tname"
+                  autocomplete="off" class="layui-input" th:value="${examsubject.subjectname}">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_tname" class="layui-form-label">
+                  <span class="x-red">*</span>考试班级
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_tname" name="subjectname" required="" lay-verify="tname"
+                  autocomplete="off" class="layui-input" th:value="${examsubject.subjectname}">
+              </div>
+          </div>
           <div class="layui-form-item">
               <label for="L_tid" class="layui-form-label">
               </label>
@@ -81,7 +107,7 @@
               $.ajax({
                   type:"put",
                   async:true,
-                  url:"/studentClass",
+                  url:"/examsubject",
                   data:data.field,
                   dateType:"json",
                   success:function () {

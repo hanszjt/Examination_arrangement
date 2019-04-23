@@ -27,12 +27,12 @@ public class ClassRoom {
         this.id = id;
     }
 
-    public String getTeacherbuilding() {
+    public String getTeachbuilding() {
         return teachbuilding;
     }
 
-    public void setTeacherbuilding(String teacherbuilding) {
-        this.teachbuilding = teacherbuilding;
+    public void setTeachbuilding(String teachbuilding) {
+        this.teachbuilding = teachbuilding;
     }
 
     public String getClassroomnum() {

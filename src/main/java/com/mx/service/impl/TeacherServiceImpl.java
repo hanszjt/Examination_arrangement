@@ -25,8 +25,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public int removeTeacher(String tid) {
-        int i = teacherMapper.deleteTeacher(tid);
+    public int removeTeacher(int id) {
+        int i = teacherMapper.deleteTeacher(id);
         return i;
     }
 
@@ -53,8 +53,14 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public int deleteTeacherByIds(List<String> tids) {
-        int i = teacherMapper.deleteTeacherByIds(tids);
+    public Teacher selectTeacherByTid(String tid) {
+        Teacher teacher = teacherMapper.querryTeacherByTid(tid);
+        return teacher;
+    }
+
+    @Override
+    public int deleteTeacherByIds(List<Integer> ids) {
+        int i = teacherMapper.deleteTeacherByIds(ids);
         return i;
     }
 

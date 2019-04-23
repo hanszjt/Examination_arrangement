@@ -28,7 +28,7 @@
                   <span class="x-red">*</span>科目名称
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_tid" name="subjectname" required="" lay-verify="tid"
+                  <input type="text" id="L_tid" name="subjectname" required="" lay-verify=""
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -48,10 +48,6 @@
           ,layer = layui.layer;
 
             //自定义验证规则
-          form.verify({
-            tid: [/^\d{5,10}/, '工号为5-10位数字']
-            ,ttel: [/^1[345678]\d{9}$/, '电话格式错误']
-          });
 
           //监听提交
           form.on('submit(add)', function(data){

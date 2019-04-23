@@ -27,15 +27,15 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so" th:action="@{/studentClass/search}" method="post">
-          <input type="text" name="classname"  placeholder="请输入搜索班级名称" autocomplete="off" class="layui-input">
+        <form class="layui-form layui-col-md12 x-so" th:action="@{/classRoom/search}" method="post">
+          <input type="text" name="classroomnum"  placeholder="请输入搜索教室编号" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加班级','/studentClass',600,400)"><i class="layui-icon"></i>添加</button>
-        <span class="x-right" style="line-height:40px" >共有数据:  [[${studentClassCount}]]  条</span>
+        <button class="layui-btn" onclick="x_admin_show('添加教师','/classRoomAdd',600,400)"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px" >共有数据:  [[${classRoomCount}]]  条</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -43,24 +43,26 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>班级编号</th>
-            <th>班级名称</th>
-            <th>班级人数</th>
+            <th>教室ID</th>
+            <th>教学楼编号</th>
+            <th>教室编号</th>
+            <th>教室可以考试人数</th>
             <th>操作</th></tr>
         </thead>
         <tbody>
-          <tr th:each="studentClass:${pageInfo.list}">
+          <tr th:each="classRoom:${pageInfo.list}">
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" th:data-id="${studentClass.id}"><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" th:data-id="${classRoom.id}"><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td th:text="${studentClass.id}"></td>
-            <td th:text="${studentClass.classname}"></td>
-            <td th:text="${studentClass.studentnum}"></td>
+            <td th:text="${classRoom.id}"></td>
+            <td th:text="${classRoom.teachbuilding}"></td>
+            <td th:text="${classRoom.classroomnum}"></td>
+            <td th:text="${classRoom.classroomcount}"></td>
             <td class="td-manage">
-              <a title="编辑"  th:onclick="x_admin_show('编辑',[[@{/studentClass/}+${studentClass.id}]],600,400)" href="javascript:;">
+              <a title="编辑"  th:onclick="x_admin_show('编辑',[[@{/classRoom/}+${classRoom.id}]],600,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" th:onclick="member_del(this,[[${studentClass.id}]])" href="javascript:;">
+              <a title="删除" th:onclick="member_del(this,[[${classRoom.id}]])" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
@@ -109,7 +111,7 @@
                   type:"DELETE",
                   date:id.field,
                   async:true,
-                  url:"/studentClass/"+id,
+                  url:"/classRoom/"+id,
                   dateType:"json",
                   success:function () {
                       layer.msg('已删除!',{icon:1,time:1000},function () {
@@ -131,13 +133,13 @@
 
         var data = tableCheck.getData();
         if(data.length == 0){
-            layer.msg('请选择要删除的班级信息');
+            layer.msg('请选择要删除的教师信息');
         }else {
             layer.confirm('确认要删除吗？', function (index) {
                 //捉到所有被选中的，发异步进行删除
                 $.ajax({
                     type: "post",
-                    url: "/dstudentClasss",
+                    url: "/dclassRooms",
                     data: JSON.stringify(data),
                     contentType: 'application/json;charset=utf-8',
                     success: function (result) {

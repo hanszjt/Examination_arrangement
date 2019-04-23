@@ -10,15 +10,25 @@ public class ClassUsedate {
     private String usedate;
     private int usetime;
     private int class_id;
+    private String studentclassId;
 
     @Override
     public String toString() {
         return "ClassUsedate{" +
                 "id=" + id +
-                ", usedate=" + usedate +
+                ", usedate='" + usedate + '\'' +
                 ", usetime=" + usetime +
                 ", class_id=" + class_id +
+                ", studentclassId='" + studentclassId + '\'' +
                 '}';
+    }
+
+    public String getStudentclassId() {
+        return studentclassId;
+    }
+
+    public void setStudentclassId(String studentclassId) {
+        this.studentclassId = studentclassId;
     }
 
     public int getId() {

@@ -3,16 +3,16 @@
   
   <head>
     <meta charset="UTF-8">
-    <title>欢迎页面-X-admin2.0</title>
+    <title>内蒙古工业大学排考系统</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="/css/font.css">
-    <link rel="stylesheet" href="/css/xadmin.css">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="/js/xadmin.js"></script>
+    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -24,68 +24,70 @@
     <div class="x-body layui-anim layui-anim-up">
         <form class="layui-form">
           <div class="layui-form-item">
-              <label for="L_tid" class="layui-form-label">
-                  <span class="x-red">*</span>班级编号
+              <label for="L_classroomnum" class="layui-form-label">
+                  <span class="x-red">*</span>教学楼编号
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_tid" name="id" required="" lay-verify="id" onclick="inputdianji()"
-                  autocomplete="off" class="layui-input" th:value="${studentClass.id}" readonly="readonly" unselectable="on">
+                  <select type="text" id="L_classroomnum" name="teachbuilding" required="" lay-verify=""
+                          autocomplete="off" class="layui-input">
+                      <option value=""></option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                  </select>
               </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="L_tname" class="layui-form-label">
-                  <span class="x-red">*</span>班级名称
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="L_tname" name="classname" required="" lay-verify="tname"
-                  autocomplete="off" class="layui-input" th:value="${studentClass.classname}">
+              <br/>
+              <br/>
+              <br/>
+              <div class="layui-form-item">
+                  <label for="L_classroomnum" class="layui-form-label">
+                      <span class="x-red">*</span>教室编号
+                  </label>
+                  <div class="layui-input-inline">
+                      <input type="text" id="L_classroomnum" name="classroomnum" required="" lay-verify=""
+                             autocomplete="off" class="layui-input">
+                  </div>
+              </div>
+              <div class="layui-form-item">
+                  <label for="L_classroomnum" class="layui-form-label">
+                      <span class="x-red">*</span>教室可以考试人数
+                  </label>
+                  <div class="layui-input-inline">
+                      <input type="text" id="classroomcount" name="classroomcount" required="" lay-verify=""
+                             autocomplete="off" class="layui-input">
+                  </div>
               </div>
           </div>
 
-            <div class="layui-form-item">
-                <label for="L_tname" class="layui-form-label">
-                    <span class="x-red">*</span>班级人数
-                </label>
-                <div class="layui-input-inline">
-                    <input type="text" id="L_tname" name="studentnum" required="" lay-verify="tname"
-                           autocomplete="off" class="layui-input" th:value="${studentClass.studentnum}">
-                </div>
-            </div>
           <div class="layui-form-item">
-              <label for="L_tid" class="layui-form-label">
+              <label class="layui-form-label">
               </label>
               <button  class="layui-btn" lay-filter="add" lay-submit="">
-                  修改
+                  增加
               </button>
           </div>
       </form>
     </div>
     <script>
-        function inputdianji(){
-            layui.layer.alert('不可修改');
-        }
         layui.use(['form','layer'], function(){
             $ = layui.jquery;
           var form = layui.form
           ,layer = layui.layer;
 
             //自定义验证规则
-          /*form.verify({
-            id: [/^\d{5,10}/, '工号为5-10位数字']
-
-          });*/
 
 
           //监听提交
           form.on('submit(add)', function(data){
               $.ajax({
-                  type:"put",
+                  type:"post",
                   async:true,
-                  url:"/studentClass",
+                  url:"/classRoom",
                   data:data.field,
                   dateType:"json",
                   success:function () {
-                      layer.alert("修改成功", {icon: 6},function () {
+                      layer.alert("增加成功", {icon: 6},function () {
                           //刷新界面
                           window.parent.location.reload();
                           // 获得frame索引
