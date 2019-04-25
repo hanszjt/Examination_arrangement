@@ -55,7 +55,7 @@ public interface ExamSubjectMapper {
      * 查询科目数量
      * @return
      */
-    @Select("select count(*) from Exam_subject")
+    @Select("select count(*) from exam_subject")
     int selectExamsubjectCount();
 
     /**

@@ -112,6 +112,7 @@ public class ExamController {
     @ResponseBody
     @PutMapping("/exam")
     public String UpdateExam(Exam exam){
+        System.out.println(exam);
         examService.updateExam(exam);
         return "success";
     }

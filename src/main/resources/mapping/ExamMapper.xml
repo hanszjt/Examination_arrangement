@@ -55,19 +55,19 @@
         UPDATE exam_info
         <trim prefix="set" suffixOverrides=",">
             <if test="classroom != null">
-                classroom,
+                classroom=#{classroom},
             </if>
             <if test="invigilator != null">
-                invigilator,
+                invigilator=#{invigilator},
             </if>
             <if test="examsubject != null">
-                examsubject,
+                examsubject=#{examsubject},
             </if>
             <if test="examtime != null">
-                examtime,
+                examtime=#{examtime},
             </if>
             <if test="examclass != null">
-                examclass,
+                examclass=#{examclass},
             </if>
         </trim>
         WHERE id = #{id}

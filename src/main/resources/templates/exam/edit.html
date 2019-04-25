@@ -13,6 +13,7 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/js/xadmin.js"></script>
+      <script type="text/javascript" src="/lib/layui/formSelects-v4.js" charset="utf-8"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -37,8 +38,8 @@
                   <span class="x-red">*</span>考试教室
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_tname" name="subjectname" required="" lay-verify="tname"
-                  autocomplete="off" class="layui-input" th:value="${examsubject.subjectname}">
+                  <input type="text" id="L_tname" name="classroom" required="" lay-verify="tname"
+                  autocomplete="off" class="layui-input" th:value="${exam.classroom}">
               </div>
           </div>
           <div class="layui-form-item">
@@ -46,8 +47,8 @@
                   <span class="x-red">*</span>监考教师
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_tname" name="subjectname" required="" lay-verify="tname"
-                  autocomplete="off" class="layui-input" th:value="${examsubject.subjectname}">
+                  <input type="text" id="L_tname" name="invigilator" required="" lay-verify="tname"
+                  autocomplete="off" class="layui-input" th:value="${exam.invigilator}">
               </div>
           </div>
           <div class="layui-form-item">
@@ -55,8 +56,8 @@
                   <span class="x-red">*</span>考试科目
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_tname" name="subjectname" required="" lay-verify="tname"
-                  autocomplete="off" class="layui-input" th:value="${examsubject.subjectname}">
+                  <input type="text" id="L_tname" name="examsubject" required="" lay-verify="tname"
+                  autocomplete="off" class="layui-input" th:value="${exam.examsubject}">
               </div>
           </div>
           <div class="layui-form-item">
@@ -64,8 +65,8 @@
                   <span class="x-red">*</span>考试时间
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_tname" name="subjectname" required="" lay-verify="tname"
-                  autocomplete="off" class="layui-input" th:value="${examsubject.subjectname}">
+                  <input type="text" id="L_tname" name="examtime" required="" lay-verify="tname"
+                  autocomplete="off" class="layui-input" th:value="${exam.examtime}">
               </div>
           </div>
           <div class="layui-form-item">
@@ -73,8 +74,8 @@
                   <span class="x-red">*</span>考试班级
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_tname" name="subjectname" required="" lay-verify="tname"
-                  autocomplete="off" class="layui-input" th:value="${examsubject.subjectname}">
+                  <input type="text" id="L_tname" name="examclass" required="" lay-verify="tname"
+                  autocomplete="off" class="layui-input" th:value="${exam.examclass}">
               </div>
           </div>
           <div class="layui-form-item">
@@ -107,7 +108,7 @@
               $.ajax({
                   type:"put",
                   async:true,
-                  url:"/examsubject",
+                  url:"/exam",
                   data:data.field,
                   dateType:"json",
                   success:function () {
