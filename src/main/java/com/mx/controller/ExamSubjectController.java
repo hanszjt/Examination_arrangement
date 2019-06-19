@@ -34,6 +34,14 @@ public class ExamSubjectController {
         return "examsubject/list";
     }
 
+    /**
+     * 通过名字搜索考试科目信息
+     * @param pageNo
+     * @param pageSize
+     * @param tname
+     * @param model
+     * @return
+     */
     @PostMapping("/examsubject/search")
     public String searchExamsubject(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo ,
                                 @RequestParam(value = "pageSize",defaultValue = "10") int pageSize ,
@@ -46,7 +54,7 @@ public class ExamSubjectController {
     }
 
     /**
-     * 添加考试科目页面
+     * 进入添加考试科目页面
      * @return
      */
     @GetMapping("/examsubject")

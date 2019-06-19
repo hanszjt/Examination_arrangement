@@ -27,24 +27,36 @@ public class LoginController {
     @Autowired
     TeacherMapper teacherMapper;
 
-
+    /**
+     * 登录判断逻辑，检查用户名密码以及用户的权限
+     * @param username
+     * @param password
+     * @param map
+     * @param httpSession
+     * @return
+     */
     @PostMapping(value = "/checkLogin")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
                         Map<String,Object> map , HttpSession httpSession){
+        //判断用户名以及密码是否正确
         User user = userService.checkUser(username, password);
         if(user != null){
-            if (user.getRole().equals("1")){
-                httpSession.setAttribute("loginUser", username);
-                return "redirect:/home.html";
-            }
+            //先判断是否被停用账户，0为启用，1为停用
             if (user.getStatus().equals("0")) {
                 httpSession.setAttribute("loginUser", username);
+                //判断是否为管理员权限 1为老师，0为管理员
+                if (user.getRole().equals("1")){
+                    return "redirect:/home.html";
+                }
                 return "redirect:/main.html";
             }else {
                 map.put("msg","用户被停用，请联系管理员");
                 return "login";
             }
+
+
+
         }else{
             map.put("msg","用户名或密码错误");
             return "login";
@@ -52,7 +64,11 @@ public class LoginController {
 
     }
 
-
+    /**
+     * 退出当前用户，切换账户
+     * @param httpSession
+     * @return
+     */
     @GetMapping("/exitUser")
     public String exitUser(HttpSession httpSession){
         httpSession.setAttribute("loginUser",null);

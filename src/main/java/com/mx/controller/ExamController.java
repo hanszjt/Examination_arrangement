@@ -21,7 +21,7 @@ public class ExamController {
     ExamService examService;
 
     /**
-     * 进入考试科目管理界面
+     * 进入考场信息管理界面
      * @param model
      * @return
      */
@@ -33,6 +33,14 @@ public class ExamController {
         return "exam/list";
     }
 
+    /**
+     * 搜索监考教师姓名来查询考场信息
+     * @param pageNo
+     * @param pageSize
+     * @param tname
+     * @param model
+     * @return
+     */
     @PostMapping("/exam/search")
     public String searchExam(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo ,
                                     @RequestParam(value = "pageSize",defaultValue = "10") int pageSize ,
@@ -44,6 +52,16 @@ public class ExamController {
         model.addAttribute("serachname",tname);
         return "exam/searchlist";
     }
+
+    /**
+     * 用于分页搜索监考教师姓名来查询考场信息
+     * 与上面的区别为一个是post请求一个是get请求
+     * @param pageNo
+     * @param pageSize
+     * @param tname
+     * @param model
+     * @return
+     */
     @GetMapping("/exam/search")
     public String searchExamName(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo ,
                              @RequestParam(value = "pageSize",defaultValue = "10") int pageSize ,
@@ -57,7 +75,7 @@ public class ExamController {
     }
 
     /**
-     * 添加考试科目页面
+     * 添加考场
      * @return
      */
     @GetMapping("/exam")
@@ -66,7 +84,7 @@ public class ExamController {
     }
 
     /**
-     * 添加考试科目逻辑
+     * 添加考场逻辑
      * @param exam
      * @return
      */
@@ -78,7 +96,7 @@ public class ExamController {
     }
 
     /**
-     * 删除考试科目
+     * 删除考场信息
      * @param id
      * @return
      */
@@ -90,7 +108,7 @@ public class ExamController {
     }
 
     /**
-     * 通过id查询考试科目
+     * 通过id查询考场信息
      * @param id
      * @param model
      * @return
@@ -105,7 +123,7 @@ public class ExamController {
 
 
     /**
-     * 修改考试科目
+     * 修改考场信息
      * @param exam
      * @return
      */
@@ -119,7 +137,7 @@ public class ExamController {
 
 
     /**
-     * 批量删除考试科目
+     * 批量删除考场信息
      * @param data
      * @return
      */

@@ -40,7 +40,14 @@ public class UserController {
     }
 
 
-
+    /**
+     * 通过用户名搜索用户
+     * @param pageNo
+     * @param pageSize
+     * @param username
+     * @param model
+     * @return
+     */
     @PostMapping("/user/search")
     public String searchTeacher(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo ,
                                 @RequestParam(value = "pageSize",defaultValue = "10") int pageSize ,
@@ -53,7 +60,7 @@ public class UserController {
     }
 
     /**
-     * 添加用户页面
+     * 进入添加用户页面
      * @return
      */
     @GetMapping("/user")
@@ -99,6 +106,11 @@ public class UserController {
         return "user/admin-edit";
     }
 
+    /**
+     * 修改账户停用或启用
+     * @param id
+     * @return
+     */
     @ResponseBody
     @GetMapping("/userstatus/{id}")
     public String updateUserStatus(@PathVariable("id") int id){
@@ -107,7 +119,7 @@ public class UserController {
     }
 
     /**
-     * 修改用户
+     * 修改用户信息
      * @param user
      * @return
      */

@@ -22,7 +22,7 @@ public class ClassRoomController {
     ClassRoomService classRoomService;
 
     /**
-     * 进入考试科目管理界面
+     * 进入教室管理界面
      * @param model
      * @return
      */
@@ -34,6 +34,14 @@ public class ClassRoomController {
         return "classRoom/list";
     }
 
+    /**
+     * 通过教室编号来查询教室信息
+     * @param pageNo
+     * @param pageSize
+     * @param classroomnum
+     * @param model
+     * @return
+     */
     @PostMapping("/classRoom/search")
     public String searchClassRoom(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo ,
                              @RequestParam(value = "pageSize",defaultValue = "10") int pageSize ,
@@ -47,7 +55,7 @@ public class ClassRoomController {
 
 
     /**
-     * 添加考试科目页面
+     * 添加教室页面
      * @return
      */
     @GetMapping("/classRoomAdd")
@@ -56,7 +64,7 @@ public class ClassRoomController {
     }
 
     /**
-     * 添加考试科目逻辑
+     * 添加教室信息逻辑
      * @param classRoom
      * @return
      */
@@ -69,7 +77,7 @@ public class ClassRoomController {
     }
 
     /**
-     * 删除考试科目
+     * 删除教室信息
      * @param id
      * @return
      */
@@ -81,7 +89,7 @@ public class ClassRoomController {
     }
 
     /**
-     * 通过id查询考试科目
+     * 通过id查询教室
      * @param id
      * @param model
      * @return
@@ -96,7 +104,7 @@ public class ClassRoomController {
 
 
     /**
-     * 修改考试科目
+     * 修改教室信息
      * @param classRoom
      * @return
      */
@@ -109,7 +117,7 @@ public class ClassRoomController {
 
 
     /**
-     * 批量删除考试科目
+     * 批量删除教室信息
      * @param data
      * @return
      */

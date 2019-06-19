@@ -26,6 +26,14 @@ public class UserTeacherController {
     @Autowired
     TeacherService teacherService;
 
+    /**
+     * 教师登录后查询监考信息
+     * @param pageNo
+     * @param pageSize
+     * @param tname
+     * @param model
+     * @return
+     */
     @GetMapping("/teachersearch")
     public String searchExamName(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo ,
                                  @RequestParam(value = "pageSize",defaultValue = "10") int pageSize ,

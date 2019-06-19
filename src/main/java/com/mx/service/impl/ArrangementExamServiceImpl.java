@@ -30,25 +30,38 @@ public class ArrangementExamServiceImpl implements ArrangementExamService {
     @Autowired
     TeacherMapper teacherMapper;
 
+    /**
+     * 查询是否有教室进行排考，并返回可以排考的教室
+     * @param arrangementExam
+     * @return
+     * @throws ParseException
+     */
     @Override
     public Map<String,Object> addExam(ArrangementExam arrangementExam) throws ParseException {
+        //拿到输入的开始日期
         String starttime = arrangementExam.getStart();
+        //拿到输入的结束日期
         String endtime = arrangementExam.getEnd();
         List<Integer> finalClassId = new ArrayList<>();
         Map<String,Object> map = new HashMap<>();
         boolean f = true;
         boolean t = true;
+        //判断结束条件，判断开始的时间是否等于结束时间，是结束循环。
         if (starttime.equals(endtime))
             f=false;
         do {
+            //初始化班级列表
             finalClassId.clear();
             //获取某一天中已经排考的教室
             List<ClassUsedate> classId = classUsedateMapper.selectClassUsedateByName(starttime);
             List<Integer> idsm = new ArrayList<>();
             List<Integer> idsa = new ArrayList<>();
             List<Integer> studentClassid = new ArrayList<>();
+            //遍历已经排考的教室
             for (ClassUsedate ci: classId) {
+                //获取在排考教室中考试的班级
                 String[] split = ci.getStudentclassId().split(",");
+                //将考试班级id加入到列表中
                 for (String s :split) {
                     studentClassid.add(Integer.parseInt(s));
                 }
@@ -62,16 +75,18 @@ public class ArrangementExamServiceImpl implements ArrangementExamService {
             int examPerson = 0;
 
 
-            //获取排考班级的id
+            //获取需要排考班级的id
             List<Integer> studentClassId = arrangementExam.getClassId();
             boolean flag = true;
+            //遍历需要排考的班级id
             for (Integer sc: studentClassId) {
+                //查看需要排考的班级在这一天中是否有班级有考试，有就进行日期加一运算
                 if (studentClassid.indexOf(sc) != -1){
                     flag = false;
                     break;
                 }
             }
-
+            //判断需要排考的班级今天是否有班级有别的考试，没有进行下一步，有进行日期加一运算
             if (flag){
                 //获取未排考的教室的id
                 List<ClassRoom> classRooms;
@@ -123,6 +138,7 @@ public class ArrangementExamServiceImpl implements ArrangementExamService {
                             }
                         }
 
+                        //将查询并且处理好的教室信息存入map中，并将map返回
                         finalClassId.add(cr.getId());
                         map.put(String.valueOf(cr.getId()),classRoomStudentClass);
                         if (studentClassId.size() == 0){
@@ -189,6 +205,10 @@ public class ArrangementExamServiceImpl implements ArrangementExamService {
         return null;
     }
 
+    /**
+     * 返回需要的监考教师
+     * @return
+     */
     @Override
     public List<Integer> getInvigilator() {
         int lastid = lastTeacherIdMapper.selectLastId();
@@ -210,6 +230,12 @@ public class ArrangementExamServiceImpl implements ArrangementExamService {
         return list;
     }
 
+    /**
+     * 日期转字符串类型方法
+     * @param start
+     * @return
+     * @throws ParseException
+     */
     public String addDay(String start) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = simpleDateFormat.parse(start);

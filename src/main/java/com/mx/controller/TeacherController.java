@@ -35,6 +35,14 @@ public class TeacherController {
         return "teacher/member-list";
     }
 
+    /**
+     * 通过教师姓名搜索教师信息
+     * @param pageNo
+     * @param pageSize
+     * @param tname
+     * @param model
+     * @return
+     */
     @PostMapping("/teacher/search")
     public String searchTeacher(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo ,
                                 @RequestParam(value = "pageSize",defaultValue = "10") int pageSize ,
@@ -47,7 +55,7 @@ public class TeacherController {
     }
 
     /**
-     * 添加教师页面
+     * 进入添加教师页面
      * @return
      */
     @GetMapping("/teacher")
@@ -68,7 +76,7 @@ public class TeacherController {
     }
 
     /**
-     * 删除教师
+     * 通过教师id删除教师
      * @param id
      * @return
      */

@@ -18,6 +18,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
 
+    /**
+     * 通过用户名密码判断是否正确
+     * @param username
+     * @param password
+     * @return
+     */
     @Override
     public User checkUser(String username, String password) {
         User userByName = userMapper.findUserByName(username);
@@ -28,6 +34,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * 查询用户信息
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<User> findAllUser(int pageNo, int pageSize) {
         PageHelper.startPage(pageNo,pageSize);
@@ -36,42 +48,78 @@ public class UserServiceImpl implements UserService {
         return pageInfo;
     }
 
+    /**
+     * 添加用户信息
+     * @param user
+     * @return
+     */
     @Override
     public int addUser(User user) {
         int i = userMapper.addUser(user);
         return i;
     }
 
+    /**
+     * 删除用户信息
+     * @param id
+     * @return
+     */
     @Override
     public int removeUser(int id) {
         int i = userMapper.deleteUser(id);
         return i;
     }
 
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
     @Override
     public int updateUser(User user) {
         int i = userMapper.updateUser(user);
         return i;
     }
 
+    /**
+     * 通过id查询用户信息
+     * @param id
+     * @return
+     */
     @Override
     public User findUserById(int id) {
         User user = userMapper.queryUserById(id);
         return user;
     }
 
+    /**
+     * 通过id删除用户
+     * @param ids
+     * @return
+     */
     @Override
     public int deleteUserByIds(List<Integer> ids) {
         int i = userMapper.deleteUserByIds(ids);
         return i;
     }
 
+    /**
+     * 查询用户数量
+     * @return
+     */
     @Override
     public int selectCountUser() {
         int i = userMapper.selectUserCount();
         return i;
     }
 
+    /**
+     * 通过用户名查询用户信息
+     * @param pageNo
+     * @param pageSize
+     * @param username
+     * @return
+     */
     @Override
     public PageInfo<User> selectUserByName(int pageNo, int pageSize, String username) {
         PageHelper.startPage(pageNo,pageSize);
@@ -80,6 +128,11 @@ public class UserServiceImpl implements UserService {
         return pageInfo;
     }
 
+    /**
+     * 修改用户启用或停用
+     * @param id
+     * @return
+     */
     @Override
     public int updateStatus(int id) {
         User user = userMapper.queryUserById(id);

@@ -21,7 +21,7 @@ public class StudentClassController {
     @Autowired
     StudentClassService studentClassService;
     /**
-     * 进入考试科目管理界面
+     * 进入班级管理界面
      * @param model
      * @return
      */
@@ -33,6 +33,14 @@ public class StudentClassController {
         return "studentClass/list";
     }
 
+    /**
+     * 通过班级名字搜索班级
+     * @param pageNo
+     * @param pageSize
+     * @param classname
+     * @param model
+     * @return
+     */
     @PostMapping("/studentClass/search")
     public String searchStudentClass(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo ,
                                     @RequestParam(value = "pageSize",defaultValue = "10") int pageSize ,
@@ -45,7 +53,7 @@ public class StudentClassController {
     }
 
     /**
-     * 添加考试科目页面
+     * 进入添加班级信息页面
      * @return
      */
     @GetMapping("/studentClass")
@@ -54,7 +62,7 @@ public class StudentClassController {
     }
 
     /**
-     * 添加考试科目逻辑
+     * 添加班级信息逻辑
      * @param studentClass
      * @return
      */
@@ -66,7 +74,7 @@ public class StudentClassController {
     }
 
     /**
-     * 删除考试科目
+     * 删除班级信息
      * @param id
      * @return
      */
@@ -78,7 +86,7 @@ public class StudentClassController {
     }
 
     /**
-     * 通过id查询考试科目
+     * 通过id查询班级信息
      * @param id
      * @param model
      * @return
@@ -93,7 +101,7 @@ public class StudentClassController {
 
 
     /**
-     * 修改考试科目
+     * 修改班级信息
      * @param studentClass
      * @return
      */
@@ -106,7 +114,7 @@ public class StudentClassController {
 
 
     /**
-     * 批量删除考试科目
+     * 批量删除班级信息
      * @param data
      * @return
      */
